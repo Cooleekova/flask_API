@@ -3,20 +3,20 @@ from flask.views import MethodView
 from app import app
 from app.validator import validate
 from app.models import Ad, User
-from app.schema import USER_CREATE
+from app.schema import USER_CREATE, AD_CREATE
+
 
 # Должны быть реализованы методы создания/удаления/редактирования объявления
 # POST метод должен создавать объявление, GET - получать объявление, DELETE - удалять объявление.
 
-
 class UserView(MethodView):
 
-    def get(self, user_id):
+    def get_user(self, user_id):
         user = User.by_id(user_id)
         return jsonify(user.to_dict())
 
     @validate('json', USER_CREATE)
-    def post(self):
+    def post_user(self):
         user = User(**request.json)
         user.set_password(request.json['password'])
         user.add()
@@ -25,16 +25,17 @@ class UserView(MethodView):
 
 class AdView(MethodView):
 
-    def get(self, ad_id):
+    def get_ad(self, ad_id):
         ad = Ad.by_id(ad_id)
         return jsonify(ad.to_dict())
 
-    def post(self):
+    @validate('json', AD_CREATE)
+    def post_ad(self):
         ad = Ad(**request.json)
         ad.add()
         return jsonify(ad.to_dict())
 
-    def delete(self, ad_id):
+    def delete_ad(self, ad_id):
         ad = Ad.by_id(ad_id)
         ad.delete()
         return jsonify({'message': f'Ad was deleted'})
