@@ -1,0 +1,13 @@
+import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+
+secret_key = os.getenv("SECRET_KEY")
+user = os.getenv("USER")
+password = os.getenv("PASSWORD")
+host = os.getenv("HOST")
+port = os.getenv("PORT")
+db = os.getenv("DB")
