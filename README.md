@@ -1,1 +1,1 @@
-#  Backend для сайта объявлений, написанный на Flask (REST API)
+##  Backend for classifieds site written in Flask (REST API)
